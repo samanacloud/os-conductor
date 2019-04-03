@@ -15,7 +15,9 @@
 
 from oslo_config import cfg
 
-base_options = []
+base_options = [
+# TODO: add certificates needed to access etcd configurations
+]
 
 def register_opts(conf):
     conf.register_opts(base_options)
