@@ -23,4 +23,5 @@ from os_conductor import config
 CONF = os_conductor.conf.CONF
 
 def main():
+    config.parse_args(sys.argv)
     print CONF
