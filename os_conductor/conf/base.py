@@ -16,6 +16,12 @@
 from oslo_config import cfg
 
 base_options = [
+    cfg.StrOpt("etcd_server",
+        default="127.0.0.1",
+        help="""
+            Determines the IP address of the ETCD server.
+            """),
+
     cfg.BoolOpt("daemon",
         default=False,
         help="""

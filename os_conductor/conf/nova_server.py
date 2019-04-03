@@ -34,10 +34,10 @@ nova_server_options = [
             Determine the root path for nova configuration files.
             """),
 
-    cfg.StrOpt("config_file",
-        default="nova.conf",
+    cfg.StrOpt("config_files",
+        default="",
         help="""
-            Determine the base configuration file for nova.
+            Coma separated list of configuration files to be generated.
             """)
 ]
 

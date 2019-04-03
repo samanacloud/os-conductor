@@ -28,10 +28,59 @@ LOG = logging.getLogger(__name__)
 
 CONF = os_conductor.conf.CONF
 
+def get_my_ip(device="eth0"):
+    return ni.ifaddresses(device)[ni.AF_INET][0]['addr']
+
+def child(etcd_path, config_file, etcd_server):
+    cfg_file = open(config_file, 'w')
+    ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server)
+    ecfg.set_variable('LOCAL_IP', get_my_ip("eth0"))
+    ecfg.collect()
+
+    Config = ConfigParser.ConfigParser()
+    ecfg.data_to_Config(Config)
+    Config.write(cfg_file)
+    cfg_file.close()
+
+def create_file(section, config_file):
+    config_path = "%(config_dir)s/%(config_file)s" % CONF[section]
+    etcd_path = "%s/%s" % (section, CONF[section].config_file)
+    etcd_server = CONF.etcd_server
+    pipe = CONF.daemon
+
+    if pipe:
+        if not os.path.exists(config_path):
+            try:
+                os.mkfifo(config_path)
+            except OSError:
+                print "Unable to create pipe. Check path."
+                exit(1)
+        else:
+            if not stat.S_ISFIFO(os.stat(config_path).st_mode):
+                print "The path is not a pipe"
+                exit(1)
+    while True:
+        child_pid = os.fork()
+        if child_pid != 0:
+            pid, status = os.waitpid(child_pid, 0)
+            if not pipe or status != 0:
+                break
+        else:
+            child(etcd_path, config_path, etcd_server)
+            break
+
+
 def process_launcher():
-    LOG.info(CONF.list_all_sections())
-    if CONF.daemon:
-        LOG.info("Daemon")
-    else:
-        LOG.info("Generate files")
+    pid_list = []
+    for section in CONF.list_all_sections():
+        if not CONF[section].enabled: continue
+        config_files = CONF[section].config_files.split(',')
+        for config_file in config_files:
+            pid = os.fork()
+            if pid == 0:
+                create_file(section, config_file)
+            else:
+                pid_list.push(pid)
+    LOG.info("Sub processes: %s" % pid_list)
+
     return None
