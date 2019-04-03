@@ -15,11 +15,7 @@
 
 from oslo_config import cfg
 
-base_options = [
-    cfg.StrOpt(
-        'config-file',
-        default='/etc/os_conductor',
-        help='''Path to the configuration file.''')]
+base_options = []
 
 def register_opts(conf):
     conf.register_opts(base_options)
