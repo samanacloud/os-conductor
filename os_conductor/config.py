@@ -14,12 +14,14 @@
 #    under the License.
 
 import os_conductor.conf
+from oslo_log import log
 
 from os_conductor import version
 
 CONF = os_conductor.conf.CONF
 
 def parse_args(argv, default_config_files=None):
+    log.register_options(CONF)
     CONF(argv[1:],
         project='os_conductor',
         version=version.version_string(),
