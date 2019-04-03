@@ -43,8 +43,8 @@ def child(etcd_path, config_file, etcd_server):
     cfg_file.close()
 
 def create_file(section, config_file):
-    config_path = "%(config_dir)s/%(config_file)s" % CONF[section]
-    etcd_path = "%s/%s" % (section, CONF[section].config_file)
+    config_path = "%s/%s" % (CONF[section].config_dir, config_file)
+    etcd_path = "%s/%s" % (section, config_file)
     etcd_server = CONF.etcd_server
     pipe = CONF.daemon
 
