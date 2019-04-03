@@ -81,7 +81,10 @@ def process_launcher():
             if pid == 0:
                 create_file(section, config_file)
             else:
-                pid_list.push(pid)
-    LOG.info("Sub processes: %s" % pid_list)
+                pid_list.append(pid)
+    if CONF.daemon:
+        LOG.info("Sub processes: %s" % pid_list)
+    else:
+        LOG.info("Finished creating config files")
 
     return None
