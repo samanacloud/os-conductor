@@ -16,6 +16,12 @@
 from oslo_config import cfg
 
 base_options = [
+    cfg.BoolOpt("daemon",
+        default=False,
+        help="""
+            Determines if OS_Conductor will run as daemon or
+            if it will only generate the configuration files.
+            """),
 # TODO: add certificates needed to access etcd configurations
 ]
 

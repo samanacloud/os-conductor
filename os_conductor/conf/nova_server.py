@@ -18,27 +18,27 @@ from oslo_config import cfg
 nova_server_group = cfg.OptGroup('nova_server',
     title='Nova Server options',
     help="""
-Options under this group are used to define Nova configurations.
-""")
+        Options under this group are used to define Nova configurations.
+        """)
 
 nova_server_options = [
     cfg.BoolOpt("enabled",
         default=False,
         help="""
-Determines if Nova Server configuration file will be handled.
-"""),
+            Determines if Nova Server configuration file will be handled.
+            """),
 
     cfg.StrOpt("config_dir",
         default="/etc/nova",
         help="""
-Determine the root path for nova configuration files.
-"""),
+            Determine the root path for nova configuration files.
+            """),
 
     cfg.StrOpt("config_file",
         default="nova.conf",
         help="""
-Determine the base configuration file for nova.
-""")
+            Determine the base configuration file for nova.
+            """)
 ]
 
 def register_opts(conf):

@@ -24,4 +24,8 @@ CONF = os_conductor.conf.CONF
 
 def main():
     config.parse_args(sys.argv)
+    if CONF.daemon:
+        print "Daemon"
+    else
+        print "Generate files"
     print CONF
