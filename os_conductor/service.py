@@ -13,20 +13,21 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
-"""Starter script for OS_Conductor."""
 
 import sys
 
 from oslo_log import log as logging
 import os_conductor.conf
-from os_conductor import config
-from os_conductor import service
+
+LOG = logging.getLogger(__name__)
 
 CONF = os_conductor.conf.CONF
 
-def main():
-    config.parse_args(sys.argv)
-    logging.setup(CONF, "os_conductor")
-    log = logging.getLogger(__name__)
-
-    launcher = service.processLauncher()
+def process_launcher():
+    LOG.info("test")
+    if CONF.daemon:
+        print "Daemon"
+    else:
+        print "Generate files"
+    print CONF
+    return None
