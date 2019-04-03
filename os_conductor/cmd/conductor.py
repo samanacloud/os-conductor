@@ -23,4 +23,4 @@ from os_conductor import config
 CONF = os_conductor.conf.CONF
 
 def main():
-    pass
+    print CONF
