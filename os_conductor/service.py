@@ -73,6 +73,7 @@ def create_file(section, config_file):
 def process_launcher():
     pid_list = []
     for section in CONF.list_all_sections():
+        if section == 'DEFAULT': continue
         if not CONF[section].enabled: continue
         config_files = CONF[section].config_files.split(',')
         for config_file in config_files:
