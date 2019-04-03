@@ -18,13 +18,18 @@ import sys
 
 from oslo_log import log as logging
 import os_conductor.conf
+import ConfigParser
+import netifaces as ni
+import sys
+import os, stat
+import etcdconfig
 
 LOG = logging.getLogger(__name__)
 
 CONF = os_conductor.conf.CONF
 
 def process_launcher():
-    LOG.info("test")
+    LOG.info(CONF.list_all_sections())
     if CONF.daemon:
         LOG.info("Daemon")
     else:
