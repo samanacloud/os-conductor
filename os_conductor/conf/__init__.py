@@ -15,7 +15,7 @@
 
 from oslo_config import cfg
 
-from os_conductor import base
+from os_conductor.conf import base
 
 CONF = cfg.CONF
 
