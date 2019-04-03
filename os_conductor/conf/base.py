@@ -20,3 +20,9 @@ base_options = [
         'config-file',
         default='/etc/os_conductor',
         help='''Path to the configuration file.''')]
+
+def registr_opts(conf):
+    conf.register_opts(base_options)
+
+def list_opts():
+    return {'DEFAULT': base_options}
