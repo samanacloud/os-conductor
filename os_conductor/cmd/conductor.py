@@ -26,6 +26,6 @@ def main():
     config.parse_args(sys.argv)
     if CONF.daemon:
         print "Daemon"
-    else
+    else:
         print "Generate files"
     print CONF
