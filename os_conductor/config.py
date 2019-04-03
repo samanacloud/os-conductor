@@ -19,9 +19,8 @@ from os_conductor import version
 
 CONF = os_conductor.conf.CONF
 
-def parse_args(argv, default_config_files=None, configure_db=False,
-                init_rpc=False):
-
+def parse_args(argv, default_config_files=None):
+    print version.version_string()
     CONF(argv[1:],
         project='os_conductor',
         version=version.version_string(),
