@@ -26,8 +26,7 @@ CONF = os_conductor.conf.CONF
 def process_launcher():
     LOG.info("test")
     if CONF.daemon:
-        print "Daemon"
+        LOG.info("Daemon")
     else:
-        print "Generate files"
-    print CONF
+        LOG.info("Generate files")
     return None
