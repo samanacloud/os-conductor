@@ -29,4 +29,4 @@ def main():
     logging.setup(CONF, "os_conductor")
     log = logging.getLogger(__name__)
 
-    launcher = service.processLauncher()
+    launcher = service.process_launcher()
