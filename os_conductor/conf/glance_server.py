@@ -34,16 +34,10 @@ glance_server_options = [
             Determine the root path for glance configuration files.
             """),
 
-    cfg.StrOpt("api_config_file",
-        default="glance-api.conf",
+    cfg.StrOpt("config_files",
+        default="",
         help="""
-            Determine the base configuration file for glance-api.
-            """),
-
-    cfg.StrOpt("registry_config_file",
-        default="glance-registry.conf",
-        help="""
-            Determine the base configuration file for glance-registry.
+            Coma separated list of configuration files to be generated.
             """)
 ]
 
