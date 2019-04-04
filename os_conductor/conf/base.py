@@ -14,12 +14,23 @@
 #    under the License.
 
 from oslo_config import cfg
+from oslo_utils import netutils
 
 base_options = [
     cfg.StrOpt("etcd_server",
         default="127.0.0.1",
         help="""
             Determines the IP address of the ETCD server.
+            """),
+
+    cfg.StrOpt("my_ip",
+        default=netutils.get_my_ipv4(),
+        help="""
+            The IP address which the host is using to connect to the management network.
+
+            Possible values:
+
+            * String with valid IP address. Default is IPv4 address of this host.
             """),
 
     cfg.BoolOpt("daemon",

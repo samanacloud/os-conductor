@@ -34,7 +34,7 @@ def get_my_ip(device="eth0"):
 def child(etcd_path, config_file, etcd_server):
     cfg_file = open(config_file, 'w')
     ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server)
-    ecfg.set_variable('LOCAL_IP', get_my_ip("eth0"))
+    ecfg.set_variable('LOCAL_IP', CONF.my_ip)
     ecfg.collect()
 
     Config = ConfigParser.ConfigParser()
