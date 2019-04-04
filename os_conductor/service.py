@@ -46,24 +46,23 @@ def create_file(section, config_file):
     config_path = "%s/%s" % (CONF[section].config_dir, config_file)
     etcd_path = "%s/%s" % (section, config_file)
     etcd_server = CONF.etcd_server
-    pipe = CONF.daemon
+    daemon = CONF.daemon
 
-    if pipe:
-        if not os.path.exists(config_path):
-            try:
-                os.mkfifo(config_path)
-            except OSError:
-                print "Unable to create pipe. Check path."
-                exit(1)
-        else:
-            if not stat.S_ISFIFO(os.stat(config_path).st_mode):
-                print "The path is not a pipe"
-                exit(1)
+    if os.path.exists(config_path):
+        os.rename(config_path, config_path + ".bak")
+
+    if daemon:
+        try:
+            os.mkfifo(config_path)
+        except OSError:
+            print "Unable to create pipe. Check path."
+            exit(1)
+
     while True:
         child_pid = os.fork()
         if child_pid != 0:
             pid, status = os.waitpid(child_pid, 0)
-            if not pipe or status != 0:
+            if not daemon or status != 0:
                 break
         else:
             child(etcd_path, config_path, etcd_server)
@@ -80,6 +79,7 @@ def process_launcher():
             pid = os.fork()
             if pid == 0:
                 create_file(section, config_file)
+                exit(0)
             else:
                 pid_list.append(pid)
     if CONF.daemon:
