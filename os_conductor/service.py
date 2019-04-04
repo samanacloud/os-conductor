@@ -76,12 +76,16 @@ def process_launcher():
         if not CONF[section].enabled: continue
         config_files = CONF[section].config_files.split(',')
         for config_file in config_files:
+
             pid = os.fork()
             if pid == 0:
                 create_file(section, config_file)
                 exit(0)
             else:
                 pid_list.append(pid)
+    for child in pid_list:
+        os.waitpid(child, 0)
+
     if CONF.daemon:
         LOG.info("Sub processes: %s" % pid_list)
     else:
