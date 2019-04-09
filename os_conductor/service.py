@@ -32,6 +32,11 @@ def signal_handler(sig, frame):
         LOG.info('Finished processing.')
         sys.exit(0)
 
+def set_file_permissions(section, config_path):
+    uid = pwd.getpwnam(CONF[section].user).pw_uid
+    gid = grp.getgrnam(CONF[section].group).gr_gid
+    os.chown(config_path, uid, gid)
+
 def child(etcd_path, config_file, etcd_server):
     cfg_file = open(config_file, 'w')
     ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server)
@@ -43,9 +48,7 @@ def child(etcd_path, config_file, etcd_server):
     Config.write(cfg_file)
     cfg_file.close()
     if not CONF.daemon:
-        uid = pwd.getpwnam(CONF[section].user).pw_uid
-        gid = grp.getgrnam(CONF[section].group).gr_gid
-        os.chown(config_path, uid, gid)
+        set_file_permissions(section, config_file)
 
     LOG.info("Writing file %s from %s" % (config_file, etcd_server))
 
@@ -61,9 +64,7 @@ def create_file(section, config_file):
     if daemon:
         try:
             os.mkfifo(config_path)
-            uid = pwd.getpwnam("root").pw_uid
-            gid = grp.getgrnam(CONF[section].group).gr_gid
-            os.chown(config_path, uid, gid)
+            set_file_permissions(section, config_path)
             LOG.info("Created %s pipe." % config_path)
         except OSError:
             LOG.error("Unable to create pipe %s. Check path." % config_path)
