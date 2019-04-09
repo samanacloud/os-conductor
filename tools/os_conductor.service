@@ -1,0 +1,20 @@
+[Unit]
+Description=OpenStack Conductor Service
+Before=nova-api.service nova-conductor.service nova-scheduler.service nova-consoleauth.service nova-novncproxy.service glance-api.service
+
+
+
+[Service]
+User=root
+Group=root
+Type=simple
+WorkingDirectory=~
+RuntimeDirectory=os_conductor lock/os_conductor
+CacheDirectory=os_conductor
+ExecStart=/etc/init.d/os_conductor systemd-start
+Restart=on-failure
+LimitNOFILE=65535
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target
