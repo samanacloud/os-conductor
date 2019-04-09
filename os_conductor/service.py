@@ -43,7 +43,7 @@ def child(etcd_path, config_file, etcd_server):
     Config.write(cfg_file)
     cfg_file.close()
     if not CONF.daemon:
-        uid = pwd.getpwnam("root").pw_uid
+        uid = pwd.getpwnam(CONF[section].user).pw_uid
         gid = grp.getgrnam(CONF[section].group).gr_gid
         os.chown(config_path, uid, gid)
 
