@@ -55,8 +55,9 @@ def create_file(section, config_file):
     if daemon:
         try:
             os.mkfifo(config_path)
+            LOG.info("Created %s pipe." % config_path)
         except OSError:
-            print "Unable to create pipe. Check path."
+            LOG.error("Unable to create pipe %s. Check path." % config_path)
             exit(1)
 
     while True:
@@ -75,6 +76,7 @@ def process_launcher():
     for section in CONF.list_all_sections():
         if section == 'DEFAULT': continue
         if not CONF[section].enabled: continue
+        LOG.info("Starting to handle %s component." % section)
         config_files = CONF[section].config_files.split(',')
         for config_file in config_files:
 
