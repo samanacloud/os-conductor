@@ -59,7 +59,10 @@ def create_file(section, config_file):
     daemon = CONF.daemon
 
     if os.path.exists(config_path):
-        os.rename(config_path, config_path + ".bak")
+        if stat.S_ISFIFO(os.stat(config_path).st_mode):
+            os.remove(config_path)
+        else:
+            os.rename(config_path, config_path + ".bak")
 
     if daemon:
         try:
