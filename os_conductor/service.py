@@ -43,7 +43,7 @@ def child(etcd_path, config_file, etcd_server):
     ecfg.data_to_Config(Config)
     Config.write(cfg_file)
     cfg_file.close()
-    current_file = config_file
+    global current_file = config_file
     LOG.info("Writing file %s from %s" % (config_file, etcd_server))
 
 def create_file(section, config_file):
