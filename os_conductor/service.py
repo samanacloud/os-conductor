@@ -67,6 +67,7 @@ def create_file(section, config_file):
             if not daemon or status != 0:
                 break
         else:
+            LOG.info("Waiting for requests to %s pipe/file" % config_path)
             child(etcd_path, config_path, etcd_server)
             break
 
