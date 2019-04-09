@@ -38,6 +38,7 @@ glance_server_options = [
         default="",
         help="""
             Coma separated list of configuration files to be generated.
+            e.g. glance-api.conf,glance-registry.conf
             """),
 
     cfg.StrOpt("group",

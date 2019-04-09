@@ -16,7 +16,7 @@ e set GLOBAL/NOVA/DB/NAMEAPI nova_api
 e set GLOBAL/NOVA/DB/NAME nova
 e set GLOBAL/NOVA/METADATA/PASS metadatapass
 
-e set GLOBAL/GLANCE/REGISTRY/SERVER os.samana.cloud:9191
+e set GLOBAL/GLANCE/REGISTRY/SERVER os.samana.cloud
 e set GLOBAL/GLANCE/DB/TYPE mysql+pymysql
 e set GLOBAL/GLANCE/DB/USER glance
 e set GLOBAL/GLANCE/DB/PASS Samana81.
@@ -97,7 +97,9 @@ e set nova_server/nova.conf/scheduler/discover_hosts_in_cells_interval 300
 e set nova_server/nova.conf/vnc/novncproxy_host %LOCAL_IP%
 
 # Glance Configurations
-e rm --recursive glance-server
+e rm --recursive glance-server/
+
+e rm --recursive glance-server/glance-api.conf
 e set glance_server/glance-api.conf/DEFAULT/show_image_direct_url True
 e set glance_server/glance-api.conf/DEFAULT/show_multiple_locations True
 e set glance_server/glance-api.conf/DEFAULT/bind_host %LOCAL_IP%
@@ -119,6 +121,19 @@ e set glance_server/glance-api.conf/keystone_authtoken/project_name %GLOBAL_KEYS
 e set glance_server/glance-api.conf/keystone_authtoken/username %GLOBAL_KEYSTONE_GLANCE_USER%
 e set glance_server/glance-api.conf/keystone_authtoken/password %GLOBAL_KEYSTONE_GLANCE_PASS%
 e set glance_server/glance-api.conf/paste_deploy/flavor keystone
+
+e rm --recursive glance-server/glance-registry.conf
+e set glance_server/glance-registry.conf/DEFAULT/bind_host %LOCAL_IP%
+e set glance_server/glance-registry.conf/database/connection %GLOBAL_GLANCE_DB_TYPE%://%GLOBAL_GLANCE_DB_USER%:%GLOBAL_GLANCE_DB_PASS%@%GLOBAL_GLANCE_DB_SERVER%/%GLOBAL_GLANCE_DB_NAME%
+e set glance_server/glance-registry.conf/keystone_authtoken/auth_url http://%GLOBAL_KEYSTONE_SERVER%/v3
+e set glance_server/glance-registry.conf/keystone_authtoken/memcached_servers %GLOBAL_MEMCACHED_SERVER%
+e set glance_server/glance-registry.conf/keystone_authtoken/auth_type password
+e set glance_server/glance-registry.conf/keystone_authtoken/project_domain_name %GLOBAL_KEYSTONE_PROJECT_DOMAIN%
+e set glance_server/glance-registry.conf/keystone_authtoken/user_domain_name %GLOBAL_KEYSTONE_USER_DOMAIN%
+e set glance_server/glance-registry.conf/keystone_authtoken/project_name %GLOBAL_KEYSTONE_PROJECT_NAME%
+e set glance_server/glance-registry.conf/keystone_authtoken/username %GLOBAL_KEYSTONE_GLANCE_USER%
+e set glance_server/glance-registry.conf/keystone_authtoken/password %GLOBAL_KEYSTONE_GLANCE_PASS%
+e set glance_server/glance-registry.conf/paste_deploy/flavor keystone
 
 
 
