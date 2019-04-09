@@ -42,6 +42,7 @@ e set GLOBAL/NEUTRON/DB/NAME neutron
 e set GLOBAL/MEMCACHED/SERVER os.samana.cloud:11211
 
 e set GLOBAL/KEYSTONE/SERVER os.samana.cloud:5000
+e set GLOBAL/KEYSTONE/PUBLICSERVER os.samana.cloud:35357
 e set GLOBAL/KEYSTONE/PROJECT/DOMAIN default
 e set GLOBAL/KEYSTONE/USER/DOMAIN default
 e set GLOBAL/KEYSTONE/PROJECT/NAME service
@@ -201,10 +202,11 @@ e set neutron_server/neutron.conf/DEFAULT/bind_host %LOCAL_IP%
 e set neutron_server/neutron.conf/DEFAULT/use_syslog False
 e set neutron_server/neutron.conf/DEFAULT/state_path /var/lib/neutron
 e set neutron_server/neutron.conf/DEFAULT/dhcp_agents_per_network 2
-e set neutron_server/neutron.conf/agent/root_helper_daemon "sudo /usr/bin/neutron-rootwrap-daemon /etc/neutron/rootwrap.conf"
-e set neutron_server/neutron.conf/agent/root_helper "sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf"
+e set neutron_server/neutron.conf/agent/root_helper_daemon "\"sudo /usr/bin/neutron-rootwrap-daemon /etc/neutron/rootwrap.conf\""
+e set neutron_server/neutron.conf/agent/root_helper "\"sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf\""
 e set neutron_server/neutron.conf/database/connection %GLOBAL_NEUTRON_DB_TYPE%://%GLOBAL_NEUTRON_DB_USER%:%GLOBAL_NEUTRON_DB_PASS%@%GLOBAL_NEUTRON_DB_SERVER%/%GLOBAL_NEUTRON_DB_NAME%
 e set neutron_server/neutron.conf/keystone_authtoken/auth_url http://%GLOBAL_KEYSTONE_SERVER%/v3
+e set neutron_server/neutron.conf/keystone_authtoken/www_authenticate_uri http://%GLOBAL_KEYSTONE_PUBLICSERVER%/
 e set neutron_server/neutron.conf/keystone_authtoken/memcached_servers %GLOBAL_MEMCACHED_SERVER%
 e set neutron_server/neutron.conf/keystone_authtoken/auth_type password
 e set neutron_server/neutron.conf/keystone_authtoken/project_domain_name %GLOBAL_KEYSTONE_PROJECT_DOMAIN%
