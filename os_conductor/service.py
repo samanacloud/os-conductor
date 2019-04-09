@@ -21,7 +21,7 @@ import os_conductor.conf
 import ConfigParser
 import netifaces as ni
 import sys
-import os, stat, signal
+import os, stat, signal, pwd, grp
 import etcdconfig
 
 LOG = logging.getLogger(__name__)
@@ -42,6 +42,11 @@ def child(etcd_path, config_file, etcd_server):
     ecfg.data_to_Config(Config)
     Config.write(cfg_file)
     cfg_file.close()
+    if not CONF.daemon:
+        uid = pwd.getpwnam("root").pw_uid
+        gid = grp.getgrnam(CONF[section].group).gr_gid
+        os.chown(config_path, uid, gid)
+
     LOG.info("Writing file %s from %s" % (config_file, etcd_server))
 
 def create_file(section, config_file):
@@ -56,6 +61,9 @@ def create_file(section, config_file):
     if daemon:
         try:
             os.mkfifo(config_path)
+            uid = pwd.getpwnam("root").pw_uid
+            gid = grp.getgrnam(CONF[section].group).gr_gid
+            os.chown(config_path, uid, gid)
             LOG.info("Created %s pipe." % config_path)
         except OSError:
             LOG.error("Unable to create pipe %s. Check path." % config_path)

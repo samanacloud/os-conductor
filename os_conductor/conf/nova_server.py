@@ -38,6 +38,12 @@ nova_server_options = [
         default="",
         help="""
             Coma separated list of configuration files to be generated.
+            """),
+
+    cfg.StrOpt("group",
+        default="nova",
+        help="""
+            Determines the group that will be allowed access to the configuration file.
             """)
 ]
 

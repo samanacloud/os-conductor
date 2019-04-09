@@ -38,6 +38,12 @@ glance_server_options = [
         default="",
         help="""
             Coma separated list of configuration files to be generated.
+            """),
+
+    cfg.StrOpt("group",
+        default="glance",
+        help="""
+            Determines the group that will be allowed access to the configuration file.
             """)
 ]
 
