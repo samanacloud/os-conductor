@@ -27,10 +27,9 @@ import etcdconfig
 LOG = logging.getLogger(__name__)
 
 CONF = os_conductor.conf.CONF
-current_file = ""
 
 def signal_handler(sig, frame):
-        LOG.info('Finished processing %s' % current_file)
+        LOG.info('Finished processing.')
         sys.exit(0)
 
 def child(etcd_path, config_file, etcd_server):
@@ -43,7 +42,6 @@ def child(etcd_path, config_file, etcd_server):
     ecfg.data_to_Config(Config)
     Config.write(cfg_file)
     cfg_file.close()
-    global current_file = config_file
     LOG.info("Writing file %s from %s" % (config_file, etcd_server))
 
 def create_file(section, config_file):
