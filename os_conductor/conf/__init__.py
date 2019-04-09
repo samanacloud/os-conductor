@@ -19,6 +19,7 @@ from os_conductor.conf import base
 from os_conductor.conf import nova_server
 from os_conductor.conf import glance_server
 from os_conductor.conf import cinder_server
+from os_conductor.conf import neutron_server
 
 CONF = cfg.CONF
 
@@ -26,3 +27,4 @@ base.register_opts(CONF)
 nova_server.register_opts(CONF)
 glance_server.register_opts(CONF)
 cinder_server.register_opts(CONF)
+neutron_server.register_opts(CONF)
