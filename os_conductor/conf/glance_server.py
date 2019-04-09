@@ -44,7 +44,13 @@ glance_server_options = [
         default="glance",
         help="""
             Determines the group that will be allowed access to the configuration file.
-            """)
+            """),
+
+    cfg.StrOpt("user",
+        default="glance",
+        help="""
+            Determines the user that will be allowed access to the configuration file.
+            """)    
 ]
 
 def register_opts(conf):
