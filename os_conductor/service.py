@@ -76,6 +76,7 @@ def create_file(section, config_file):
 def process_launcher():
     pid_list = []
     signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
     for section in CONF.list_all_sections():
         if section == 'DEFAULT': continue
         if not CONF[section].enabled: continue
