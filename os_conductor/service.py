@@ -21,15 +21,16 @@ import os_conductor.conf
 import ConfigParser
 import netifaces as ni
 import sys
-import os, stat
+import os, stat, signal
 import etcdconfig
 
 LOG = logging.getLogger(__name__)
 
 CONF = os_conductor.conf.CONF
 
-def get_my_ip(device="eth0"):
-    return ni.ifaddresses(device)[ni.AF_INET][0]['addr']
+def signal_handler(sig, frame):
+        LOG.info('Finished processing files')
+        sys.exit(0)
 
 def child(etcd_path, config_file, etcd_server):
     cfg_file = open(config_file, 'w')
@@ -74,6 +75,7 @@ def create_file(section, config_file):
 
 def process_launcher():
     pid_list = []
+    signal.signal(signal.SIGINT, signal_handler)
     for section in CONF.list_all_sections():
         if section == 'DEFAULT': continue
         if not CONF[section].enabled: continue
