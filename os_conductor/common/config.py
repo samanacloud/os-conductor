@@ -16,4 +16,4 @@ from oslo_middleware import cors
 
 
 def set_middleware_defaults():
-  pass
+    pass
