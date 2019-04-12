@@ -176,6 +176,7 @@ e set cinder_server/cinder.conf/DEFAULT/cinder_internal_tenant_project_id %GLOBA
 e set cinder_server/cinder.conf/DEFAULT/image_volume_cache_enabled True
 e set cinder_server/cinder.conf/database/connection %GLOBAL_CINDER_DB_TYPE%://%GLOBAL_CINDER_DB_USER%:%GLOBAL_CINDER_DB_PASS%@%GLOBAL_CINDER_DB_SERVER%/%GLOBAL_CINDER_DB_NAME%
 e set cinder_server/cinder.conf/keystone_authtoken/auth_url http://%GLOBAL_KEYSTONE_SERVER%/v3
+e set cinder_server/cinder.conf/keystone_authtoken/auth_uri http://%GLOBAL_KEYSTONE_SERVER%/v3
 e set cinder_server/cinder.conf/keystone_authtoken/memcached_servers %GLOBAL_MEMCACHED_SERVER%
 e set cinder_server/cinder.conf/keystone_authtoken/auth_type password
 e set cinder_server/cinder.conf/keystone_authtoken/project_domain_name %GLOBAL_KEYSTONE_PROJECT_DOMAIN%

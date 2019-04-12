@@ -18,6 +18,7 @@ from etcd server
 """
 import etcd.client as eClient
 import ConfigParser
+import dns.resolver
 
 class ETCDConfig:
     """Class that handles communication with ETCD service
@@ -39,7 +40,7 @@ class ETCDConfig:
     should be set using the function set_variable
     """
 
-    def __init__(self, etcd_path, etcd_server="127.0.0.1", etcd_port=2379):
+    def __init__(self, etcd_path, etcd_server="127.0.0.1", etcd_port=2379, domain=None):
         """Initializer will create a child ETCDConfig object that collects
         all the global variables that later will be replaced within the
         configurations.
@@ -48,6 +49,10 @@ class ETCDConfig:
         e.g.
         glance-server/glance-api.conf
         """
+        if domain is not None:
+            ans = dns.resolver.query('_etcd-client._tcp.' + domain, 'SRV')
+            etcd_server = tuple(((str(x.target), x.port) for x in ans))
+            etcd_port = None
         self.path = etcd_path
         self.path_array = etcd_path.split('/')
         if self.path_array[0] == '':
@@ -56,7 +61,7 @@ class ETCDConfig:
         if self.path_array[0] != 'GLOBAL':
             self.variables = ETCDConfig('GLOBAL', etcd_server, etcd_port)
             self.variables.collect()
-        self.e = eClient.Client(etcd_server, etcd_port)
+        self.e = eClient.Client(etcd_server, etcd_port, allow_reconnect=True)
 
     def set_variable(self, var_name, value):
         """Sets a global variable.

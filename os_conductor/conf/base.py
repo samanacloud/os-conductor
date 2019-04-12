@@ -23,6 +23,11 @@ base_options = [
             Determines the IP address of the ETCD server.
             """),
 
+    cfg.StrOpt("domain",
+        help="""
+            Determines the Domain to requesty SRV records of the ETCD servers.
+            """),
+
     cfg.StrOpt("my_ip",
         default=netutils.get_my_ipv4(),
         help="""
