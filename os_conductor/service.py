@@ -37,9 +37,10 @@ def set_file_permissions(section, config_path):
     gid = grp.getgrnam(CONF[section].group).gr_gid
     os.chown(config_path, uid, gid)
 
-def child(etcd_path, config_file, etcd_server):
+def child(etcd_path, config_file):
     cfg_file = open(config_file, 'w')
-    ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server)
+    ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
+
     ecfg.set_variable('LOCAL_IP', CONF.my_ip)
     ecfg.collect()
 
@@ -50,12 +51,11 @@ def child(etcd_path, config_file, etcd_server):
     if not CONF.daemon:
         set_file_permissions(section, config_file)
 
-    LOG.info("Writing file %s from %s" % (config_file, etcd_server))
+    LOG.info("Writing file %s from %s %s" % (config_file, CONF.etcd_server, CONF.domain))
 
 def create_file(section, config_file):
     config_path = "%s/%s" % (CONF[section].config_dir, config_file)
     etcd_path = "%s/%s" % (section, config_file)
-    etcd_server = CONF.etcd_server
     daemon = CONF.daemon
 
     if os.path.exists(config_path):
@@ -81,7 +81,7 @@ def create_file(section, config_file):
                 break
         else:
             LOG.info("Waiting for requests to %s pipe/file" % config_path)
-            child(etcd_path, config_path, etcd_server)
+            child(etcd_path, config_path)
             break
 
 
