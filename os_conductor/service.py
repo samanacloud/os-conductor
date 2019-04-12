@@ -51,7 +51,9 @@ def child(etcd_path, config_file):
     if not CONF.daemon:
         set_file_permissions(section, config_file)
 
-    LOG.info("Writing file %s from %s %s" % (config_file, CONF.etcd_server, CONF.domain))
+    LOG.info("Writing file %s from %s" % (
+        config_file, 
+        CONF.domain if CONF.domain is not None else CONF.etcd_server ))
 
 def create_file(section, config_file):
     config_path = "%s/%s" % (CONF[section].config_dir, config_file)
