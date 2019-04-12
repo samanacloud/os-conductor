@@ -1,5 +1,10 @@
+#!/bin/bash
+
 ETCD=http://10.255.254.200:2379
-alias e="etcdctl -C ${ETCD}"
+
+e() {
+    etcdctl -C ${ETCD} "$@"
+}
 
 # Global variables
 e set GLOBAL/TRANSPORT/USER openstack
