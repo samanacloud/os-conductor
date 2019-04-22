@@ -178,7 +178,6 @@ class ETCDConfig:
             else:
                 raise AttributeError("Unable to find path in configuration")
 
-        #config_data = self.config[self.path_array[0]][self.path_array[1]]
         if not isinstance(config_data, dict):
             raise AttributeError("Invalid config. Review etcd configuration")
 
