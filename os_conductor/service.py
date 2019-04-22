@@ -55,12 +55,13 @@ def child(etcd_path, config_file):
         ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
         ecfg.set_variable('LOCAL_IP', CONF.my_ip)
         ecfg.collect()
-        Config = ConfigParser.ConfigParser()
-        with write_file(config_file, Config) as cfg_file:
-            ecfg.data_to_Config(Config)
-            Config.write(cfg_file)
     except Exception as e:
         LOG.error("Unable to generate configuration. %s" % str(e))
+
+    Config = ConfigParser.ConfigParser()
+    with write_file(config_file, Config) as cfg_file:
+        ecfg.data_to_Config(Config)
+        Config.write(cfg_file)
 
     if not CONF.daemon:
         set_file_permissions(section, config_file)

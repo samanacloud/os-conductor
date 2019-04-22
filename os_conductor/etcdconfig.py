@@ -111,7 +111,7 @@ class ETCDConfig:
             if p in current_location:
                 current_location = current_location[p]
             else:
-                raise AttributeError("Variable %s not found", varname)
+                raise AttributeError("Variable %s not found" % varname)
         return current_location
     def set(self, varname, value):
         """Sets the value of a variable.
