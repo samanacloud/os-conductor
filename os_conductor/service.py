@@ -37,8 +37,8 @@ def write_file(config_file, Config):
         cfg_file = open(config_file, 'w')
         yield cfg_file
         cfg_file.close()
-    except Exception:
-        LOG.error("Error handling file %s." % config_file)
+    except Exception as e:
+        LOG.error("Error handling file %s. %s" % (config_file, str(e)))
 
 def signal_handler(sig, frame):
         LOG.info('Finished processing.')
