@@ -53,6 +53,7 @@ def set_file_permissions(section, config_path):
         LOG.error("Unable to change permissions of file %s" % config_path)
 
 def child(etcd_path, config_file):
+    global ecfg
 
     Config = ConfigParser.ConfigParser()
     with write_file(config_file, Config) as cfg_file:
