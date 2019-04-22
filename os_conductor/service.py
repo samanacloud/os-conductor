@@ -38,7 +38,6 @@ def write_file(config_file, Config):
     except Exception:
         LOG.error("Error handling file %s." % config_file)
 
-
 def signal_handler(sig, frame):
         LOG.info('Finished processing.')
         sys.exit(0)
@@ -52,16 +51,16 @@ def set_file_permissions(section, config_path):
         LOG.error("Unable to change permissions of file %s" % config_path)
 
 def child(etcd_path, config_file):
-    ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
-
-    ecfg.set_variable('LOCAL_IP', CONF.my_ip)
-    ecfg.collect()
-
-    Config = ConfigParser.ConfigParser()
-
-    with write_file(config_file, Config) as cfg_file:
-        ecfg.data_to_Config(Config)
-        Config.write(cfg_file)
+    try:
+        ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
+        ecfg.set_variable('LOCAL_IP', CONF.my_ip)
+        ecfg.collect()
+        Config = ConfigParser.ConfigParser()
+        with write_file(config_file, Config) as cfg_file:
+            ecfg.data_to_Config(Config)
+            Config.write(cfg_file)
+    except Exception as e:
+        LOG.error("Unable to generate configuration. %s" % str(e))
 
     if not CONF.daemon:
         set_file_permissions(section, config_file)
