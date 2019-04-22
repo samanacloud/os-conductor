@@ -235,7 +235,7 @@ e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/tenant_network_types vxlan,vla
 e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/extension_drivers port_security
 e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/type_drivers vxlan,flat,vlan
 e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/mechanism_drivers openvswitch
-e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_flat flat_networks public,public-dedicated
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_flat/flat_networks public,public-dedicated
 e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_geneve/vni_ranges 1:1000
 e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_gre/tunnel_id_ranges 1:1000
 e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_vlan/network_vlan_ranges provider:200:299
