@@ -57,6 +57,7 @@ def child(etcd_path, config_file):
         ecfg.collect()
     except Exception as e:
         LOG.error("Unable to generate configuration %s. %s" % (config_file, str(e)))
+        exit(1)
 
     Config = ConfigParser.ConfigParser()
     with write_file(config_file, Config) as cfg_file:
