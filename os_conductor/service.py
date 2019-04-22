@@ -39,6 +39,7 @@ def write_file(config_file, Config):
         cfg_file.close()
     except Exception as e:
         LOG.error("Error handling file %s. %s" % (config_file, str(e)))
+        exit(1)
 
 def signal_handler(sig, frame):
         LOG.info('Finished processing.')
