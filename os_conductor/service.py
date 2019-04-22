@@ -38,16 +38,17 @@ def set_file_permissions(section, config_path):
     os.chown(config_path, uid, gid)
 
 def child(etcd_path, config_file):
-    cfg_file = open(config_file, 'w')
     ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
 
     ecfg.set_variable('LOCAL_IP', CONF.my_ip)
     ecfg.collect()
 
     Config = ConfigParser.ConfigParser()
-    ecfg.data_to_Config(Config)
-    Config.write(cfg_file)
-    cfg_file.close()
+
+    with open(config_file, 'w') as cfg_file:
+        ecfg.data_to_Config(Config)
+        Config.write(cfg_file)
+
     if not CONF.daemon:
         set_file_permissions(section, config_file)
 
