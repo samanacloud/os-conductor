@@ -93,7 +93,11 @@ class ETCDConfig:
                 if kp == '': continue
                 if len(key_path) == 0:
                     if self.variables is not None:
-                        current_location[kp] = self.variables._replace_variables(s.value)
+                        try:
+                            current_location[kp] = self.variables._replace_variables(s.value)
+                        except Exception as e:
+                            raise AttributeError("Variable %s in attribute %s doesn't exist" 
+                                % (str(e), kp))
                     else:
                         current_location[kp] = s.value
                 else:
@@ -111,7 +115,7 @@ class ETCDConfig:
             if p in current_location:
                 current_location = current_location[p]
             else:
-                raise AttributeError("Variable %s not found" % varname)
+                raise AttributeError(varname)
         return current_location
     def set(self, varname, value):
         """Sets the value of a variable.
@@ -144,7 +148,7 @@ class ETCDConfig:
                     if replacement is not None:
                         out += str(replacement)
                     else:
-                        raise AttributeError("Variable: %s not found" % var_name)
+                        raise AttributeError(var_name)
                 else:
                     is_variable = True
                     var_name = ""

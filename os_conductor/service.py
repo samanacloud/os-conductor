@@ -56,7 +56,7 @@ def child(etcd_path, config_file):
         ecfg.set_variable('LOCAL_IP', CONF.my_ip)
         ecfg.collect()
     except Exception as e:
-        LOG.error("Unable to generate configuration. %s" % str(e))
+        LOG.error("Unable to generate configuration %s. %s" % (config_file, str(e)))
 
     Config = ConfigParser.ConfigParser()
     with write_file(config_file, Config) as cfg_file:
