@@ -175,7 +175,7 @@ class ETCDConfig:
         for i in path_array:
             if i in config_data:
                 config_data = config_data[i]
-            else
+            else:
                 raise AttributeError("Unable to find path in configuration")
 
         #config_data = self.config[self.path_array[0]][self.path_array[1]]
