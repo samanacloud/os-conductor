@@ -69,6 +69,7 @@ def child(etcd_path, config_file):
         CONF.domain if CONF.domain is not None else CONF.etcd_server ))
 
 def create_file(section, config_file):
+    global ecfg
     config_path = "%s/%s" % (CONF[section].config_dir, config_file)
     etcd_path = "%s/%s" % (section, config_file)
     daemon = CONF.daemon
