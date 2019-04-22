@@ -171,7 +171,14 @@ class ETCDConfig:
         if not isinstance(Config, ConfigParser.ConfigParser):
             raise AttributeError("Invalid input. Expecting ConfigParser.ConfigParser")
 
-        config_data = self.config[self.path_array[0]][self.path_array[1]]
+        config_data = self.config
+        for i in path_array:
+            if i in config_data:
+                config_data = config_data[i]
+            else
+                raise AttributeError("Unable to find path in configuration")
+
+        #config_data = self.config[self.path_array[0]][self.path_array[1]]
         if not isinstance(config_data, dict):
             raise AttributeError("Invalid config. Review etcd configuration")
 

@@ -230,3 +230,23 @@ e set neutron_server/neutron.conf/nova/username %GLOBAL_KEYSTONE_NOVA_USER%
 e set neutron_server/neutron.conf/nova/password %GLOBAL_KEYSTONE_NOVA_PASS%
 e set neutron_server/neutron.conf/oslo_policy/policy_file /etc/neutron/policy.json
 
+
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/tenant_network_types vxlan,vlan
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/extension_drivers port_security
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/type_drivers vxlan,flat,vlan
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2/mechanism_drivers openvswitch
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_flat flat_networks public,public-dedicated
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_geneve/vni_ranges 1:1000
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_gre/tunnel_id_ranges 1:1000
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_vlan/network_vlan_ranges provider:200:299
+e set neutron_server/plugins/ml2/ml2_conf.ini/ml2_type_vxlan/vni_ranges 1:1000
+e set neutron_server/plugins/ml2/ml2_conf.ini/securitygroup/firewall_driver iptables_hybrid
+e set neutron_server/plugins/ml2/ml2_conf.ini/agent/tunnel_types vxlan
+e set neutron_server/plugins/ml2/ml2_conf.ini/agent/tunnel_types/root_helper_daemon "\"sudo /usr/bin/neutron-rootwrap-daemon /etc/neutron/rootwrap.conf\""
+e set neutron_server/plugins/ml2/ml2_conf.ini/agent/tunnel_types/root_helper "\"sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf\""
+e set neutron_server/plugins/ml2/ml2_conf.ini/ovs/datapath_type system
+e set neutron_server/plugins/ml2/ml2_conf.ini/ovs/bridge_mappings public:br-ex,public-dedicated:br-dedicated,provider:br-provider
+e set neutron_server/plugins/ml2/ml2_conf.ini/ovs/tunnel_bridge br-tun
+e set neutron_server/plugins/ml2/ml2_conf.ini/ovs/local_ip %LOCAL_IP%
+
+
