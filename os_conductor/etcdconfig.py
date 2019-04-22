@@ -144,8 +144,7 @@ class ETCDConfig:
                     if replacement is not None:
                         out += str(replacement)
                     else:
-                        print "Variable: %s not found" % var_name
-                        return None
+                        raise AttributeError("Variable: %s not found" % var_name)
                 else:
                     is_variable = True
                     var_name = ""
