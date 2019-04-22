@@ -23,19 +23,33 @@ import netifaces as ni
 import sys
 import os, stat, signal, pwd, grp
 import etcdconfig
+import contextlib
 
 LOG = logging.getLogger(__name__)
 
 CONF = os_conductor.conf.CONF
+
+@contextlib.contextmanager
+def write_file(config_file, Config):
+    try:
+        cfg_file = open(config_file, 'w')
+        yield cfg_file
+        cfg_file.close()
+    except Exception:
+        LOG.error("Error handling file %s." % config_file)
+
 
 def signal_handler(sig, frame):
         LOG.info('Finished processing.')
         sys.exit(0)
 
 def set_file_permissions(section, config_path):
-    uid = pwd.getpwnam(CONF[section].user).pw_uid
-    gid = grp.getgrnam(CONF[section].group).gr_gid
-    os.chown(config_path, uid, gid)
+    try:
+        uid = pwd.getpwnam(CONF[section].user).pw_uid
+        gid = grp.getgrnam(CONF[section].group).gr_gid
+        os.chown(config_path, uid, gid)
+    except:
+        LOG.error("Unable to change permissions of file %s" % config_path)
 
 def child(etcd_path, config_file):
     ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
@@ -45,7 +59,7 @@ def child(etcd_path, config_file):
 
     Config = ConfigParser.ConfigParser()
 
-    with open(config_file, 'w') as cfg_file:
+    with write_file(config_file, Config) as cfg_file:
         ecfg.data_to_Config(Config)
         Config.write(cfg_file)
 
