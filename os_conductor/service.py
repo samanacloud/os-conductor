@@ -29,6 +29,8 @@ LOG = logging.getLogger(__name__)
 
 CONF = os_conductor.conf.CONF
 
+ecfg = None
+
 @contextlib.contextmanager
 def write_file(config_file, Config):
     try:
@@ -51,16 +53,10 @@ def set_file_permissions(section, config_path):
         LOG.error("Unable to change permissions of file %s" % config_path)
 
 def child(etcd_path, config_file):
-    try:
-        ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
-        ecfg.set_variable('LOCAL_IP', CONF.my_ip)
-        ecfg.collect()
-    except Exception as e:
-        LOG.error("Unable to generate configuration %s. %s" % (config_file, str(e)))
-        exit(1)
 
     Config = ConfigParser.ConfigParser()
     with write_file(config_file, Config) as cfg_file:
+        ecfg.collect()
         ecfg.data_to_Config(Config)
         Config.write(cfg_file)
 
@@ -90,6 +86,14 @@ def create_file(section, config_file):
         except OSError:
             LOG.error("Unable to create pipe %s. Check path." % config_path)
             exit(1)
+
+    try:
+        ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
+        ecfg.set_variable('LOCAL_IP', CONF.my_ip)
+        ecfg.collect()
+    except Exception as e:
+        LOG.error("Unable to generate configuration %s. %s" % (config_file, str(e)))
+        exit(1)
 
     while True:
         child_pid = os.fork()
