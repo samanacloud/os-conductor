@@ -172,7 +172,7 @@ class ETCDConfig:
             raise AttributeError("Invalid input. Expecting ConfigParser.ConfigParser")
 
         config_data = self.config
-        for i in path_array:
+        for i in self.path_array:
             if i in config_data:
                 config_data = config_data[i]
             else:
