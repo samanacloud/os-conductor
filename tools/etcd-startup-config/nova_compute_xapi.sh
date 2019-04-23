@@ -3,13 +3,12 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . $DIR/functions.sh
 
-e rm --recursive nova/compute_xapi
-
 HOST=$1
 if [ "${HOST}" == ""  ]; then
     echo "Usage: $0 <host>"
     exit 1
 fi
+e rm --recursive nova/compute_xapi
 
 e set nova/compute_xapi/nova.conf/DEFAULT/log_dir /var/log/nova
 e set nova/compute_xapi/nova.conf/DEFAULT/lock_path /var/lock/nova
