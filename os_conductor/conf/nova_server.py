@@ -29,7 +29,7 @@ nova_server_options = [
             """),
 
     cfg.StrOpt("service_type",
-        default="server",
+        default="",
         help="""
             Determine type of service for nova configuration files.
             This value determines a sub-section in etcd where specific configuration
