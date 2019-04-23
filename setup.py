@@ -26,4 +26,5 @@ except ImportError:
 
 setuptools.setup(
     setup_requires=['pbr>=2.0.0'],
+    install_requires=['etcd>=0.4.2'],
     pbr=True)
