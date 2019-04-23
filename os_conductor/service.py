@@ -135,9 +135,10 @@ def process_launcher():
     if len(pid_list) > 0:
         os.waitpid(0, 0)
 
-    if CONF.daemon:
-        LOG.info("Sub processes: %s" % pid_list)
-    else:
-        LOG.info("Finished creating config files")
+        if CONF.daemon:
+            LOG.info("Sub processes: %s" % pid_list)
+        else:
+            LOG.info("Finished creating config files")
 
+    LOG.info('Finished processing.')
     return None
