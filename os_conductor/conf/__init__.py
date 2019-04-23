@@ -20,11 +20,6 @@ from os_conductor.conf import nova
 from os_conductor.conf import glance
 from os_conductor.conf import cinder
 from os_conductor.conf import neutron
-from os_conductor.conf import nova_server
-from os_conductor.conf import glance_server
-from os_conductor.conf import cinder_server
-from os_conductor.conf import neutron_server
-from os_conductor.conf import neutron_agent
 
 CONF = cfg.CONF
 
@@ -33,8 +28,3 @@ nova.register_opts(CONF)
 glance.register_opts(CONF)
 cinder.register_opts(CONF)
 neutron.register_opts(CONF)
-nova_server.register_opts(CONF)
-glance_server.register_opts(CONF)
-cinder_server.register_opts(CONF)
-neutron_server.register_opts(CONF)
-neutron_agent.register_opts(CONF)
