@@ -69,10 +69,13 @@ def child(etcd_path, config_file):
         config_file, 
         CONF.domain if CONF.domain is not None else CONF.etcd_server ))
 
-def create_file(section, config_file):
+def create_file(os_component, config_file):
     global ecfg
-    config_path = "%s/%s" % (CONF[section].config_dir, config_file)
-    etcd_path = "%s/%s" % (section, config_file)
+    config_path = "%s/%s" % (CONF[os_component].config_dir, config_file)
+    etcd_path = "%s/"
+    if CONF[os_component].service_type != "":
+        etcd_path += CONF[os_component].service_type + "/"
+    etcd_path += config_file
     daemon = CONF.daemon
 
     if os.path.exists(config_path):
@@ -84,7 +87,7 @@ def create_file(section, config_file):
     if daemon:
         try:
             os.mkfifo(config_path)
-            set_file_permissions(section, config_path)
+            set_file_permissions(os_component, config_path)
             LOG.info("Created %s pipe." % config_path)
         except OSError:
             LOG.error("Unable to create pipe %s. Check path." % config_path)

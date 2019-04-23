@@ -3,29 +3,18 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . $DIR/functions.sh
 
-e set nova_agent/nova.conf/DEFAULT/force_raw_images True
-e set nova_agent/nova.conf/DEFAULT/disk_cachemodes writeback
+e rm --recursive nova_agent
+
 e set nova_agent/nova.conf/DEFAULT/log_dir /var/log/nova
 e set nova_agent/nova.conf/DEFAULT/lock_path /var/lock/nova
 e set nova_agent/nova.conf/DEFAULT/state_path /var/lib/nova
+e set nova_agent/nova.conf/DEFAULT/instances_path /var/lib/nova/instances/
 e set nova_agent/nova.conf/DEFAULT/transport_url %GLOBAL_TRANSPORT_TYPE%://%GLOBAL_TRANSPORT_USER%:%GLOBAL_TRANSPORT_PASS%@%GLOBAL_TRANSPORT_SERVER%:%GLOBAL_TRANSPORT_PORT%
 e set nova_agent/nova.conf/DEFAULT/my_ip %LOCAL_IP%
-e set nova_agent/nova.conf/DEFAULT/use_neutron True
-e set nova_agent/nova.conf/DEFAULT/firewall_driver nova.virt.firewall.NoopFirewallDriver
 e set nova_agent/nova.conf/DEFAULT/disk_allocation_ratio 2.0
-e set nova_agent/nova.conf/DEFAULT/vif_plugging_timeout 300
-e set nova_agent/nova.conf/DEFAULT/vif_plugging_is_fatal True
-e set nova_agent/nova.conf/DEFAULT/flat_injected False
-e set nova_agent/nova.conf/DEFAULT/graceful_shutdown_timeout 5
-e set nova_agent/nova.conf/DEFAULT/metadata_workers 2
-e set nova_agent/nova.conf/DEFAULT/osapi_compute_workers 2
-e set nova_agent/nova.conf/DEFAULT/instances_path /var/lib/nova/instances/
-e set nova_agent/nova.conf/DEFAULT/state_path /var/lib/nova
-e set nova_agent/nova.conf/DEFAULT/enabled_apis osapi_compute
-e set nova_agent/nova.conf/DEFAULT/metadata_listen 0.0.0.0
-e set nova_agent/nova.conf/DEFAULT/osapi_compute_listen 0.0.0.0
+e set nova_agent/nova.conf/DEFAULT/force_raw_images True
+e set nova_agent/nova.conf/DEFAULT/disk_cachemodes writeback
 e set nova_agent/nova.conf/DEFAULT/compute_driver libvirt.LibvirtDriver
-e set nova_agent/nova.conf/DEFAULT/instance_name_template instance-%08x
 e set nova_agent/nova.conf/api/auth_strategy keystone
 e set nova_agent/nova.conf/cells/enable False
 e set nova_agent/nova.conf/cinder/os_region_name RegionOne
