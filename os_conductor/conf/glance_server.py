@@ -28,6 +28,21 @@ glance_server_options = [
             Determines if Glance Server configuration file will be handled.
             """),
 
+    cfg.StrOpt("service_type",
+        default="",
+        help="""
+            Determine type of service for glance configuration files.
+            This value determines a sub-section in etcd where specific configuration
+            is stored.
+            e.g
+            service_type=glance_ubuntu
+            means that the configuration will be found in etcd in the following path
+            /glance_server/glance_ubuntu/glance-api.conf/(...)
+
+            This parameter allow for different type of nova configurations on 
+            the same etcd server.
+            """),
+
     cfg.StrOpt("config_dir",
         default="/etc/glance",
         help="""

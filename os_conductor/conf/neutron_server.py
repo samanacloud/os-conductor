@@ -28,6 +28,21 @@ neutron_server_options = [
             Determines if Neutron Server configuration file will be handled.
             """),
 
+    cfg.StrOpt("service_type",
+        default="",
+        help="""
+            Determine type of service for neutron configuration files.
+            This value determines a sub-section in etcd where specific configuration
+            is stored.
+            e.g
+            service_type=agents
+            means that the configuration will be found in etcd in the following path
+            /neutron_server/agents/neutron.conf/(...)
+
+            This parameter allow for different type of nova configurations on 
+            the same etcd server.
+            """),
+
     cfg.StrOpt("config_dir",
         default="/etc/neutron",
         help="""
