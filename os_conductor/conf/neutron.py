@@ -15,13 +15,13 @@
 
 from oslo_config import cfg
 
-neutron_server_group = cfg.OptGroup('neutron_server',
+neutron_group = cfg.OptGroup('neutron',
     title='Neutron Server options',
     help="""
         Options under this group are used to define Neutron configurations.
         """)
 
-neutron_server_options = [
+neutron_options = [
     cfg.BoolOpt("enabled",
         default=False,
         help="""
@@ -70,8 +70,8 @@ neutron_server_options = [
 ]
 
 def register_opts(conf):
-    conf.register_group(neutron_server_group)
-    conf.register_opts(neutron_server_options, group=neutron_server_group)
+    conf.register_group(neutron_group)
+    conf.register_opts(neutron_options, group=neutron_group)
 
 def list_opts():
-    return {neutron_server_group: neutron_server_options}
+    return {neutron_group: neutron_options}
