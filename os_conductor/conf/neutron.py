@@ -39,7 +39,7 @@ neutron_options = [
             means that the configuration will be found in etcd in the following path
             /neutron/agents/neutron.conf/(...)
 
-            This parameter allow for different type of nova configurations on 
+            This parameter allow for different type of neutron configurations on 
             the same etcd server.
             """),
 

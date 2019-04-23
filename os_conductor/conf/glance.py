@@ -39,7 +39,7 @@ glance_options = [
             means that the configuration will be found in etcd in the following path
             /glance/glance_ubuntu/glance-api.conf/(...)
 
-            This parameter allow for different type of nova configurations on 
+            This parameter allow for different type of glance configurations on 
             the same etcd server.
             """),
 

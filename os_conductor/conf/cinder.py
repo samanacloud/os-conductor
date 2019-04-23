@@ -39,7 +39,7 @@ cinder_options = [
             means that the configuration will be found in etcd in the following path
             /cinder/compute_xapi/cinder.conf/(...)
 
-            This parameter allow for different type of nova configurations on 
+            This parameter allow for different type of cinder configurations on 
             the same etcd server.
             """),
 
