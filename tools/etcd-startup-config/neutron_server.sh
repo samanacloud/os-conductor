@@ -3,7 +3,7 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 . $DIR/functions.sh
 
-e rm --recursive neutron_server
+e rm --recursive neutron/server
 
 e set neutron/server/neutron.conf/DEFAULT/l3_ha True
 e set neutron/server/neutron.conf/DEFAULT/service_plugins neutron.services.l3_router.l3_router_plugin.L3RouterPlugin
