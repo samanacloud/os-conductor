@@ -72,7 +72,7 @@ def child(etcd_path, config_file):
 def create_file(os_component, config_file):
     global ecfg
     config_path = "%s/%s" % (CONF[os_component].config_dir, config_file)
-    etcd_path = "%s/"
+    etcd_path = os_component + "/"
     if CONF[os_component].service_type != "":
         etcd_path += CONF[os_component].service_type + "/"
     etcd_path += config_file
