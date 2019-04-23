@@ -76,7 +76,7 @@ def create_file(os_component, config_file):
     if CONF[os_component].service_type != "":
         etcd_path += CONF[os_component].service_type + "/"
     etcd_path += config_file
-    LOG.info("Searching etcd path %s" % etcd_path)
+    LOG.info("Searching etcd path %s", etcd_path)
     daemon = CONF.daemon
 
     if os.path.exists(config_path):
