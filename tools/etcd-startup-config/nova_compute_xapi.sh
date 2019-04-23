@@ -6,7 +6,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 e rm --recursive nova/compute_xapi
 
 HOST=$1
-if [ -z ${HOST} ]; then
+if [ "${HOST}" == ""  ]; then
     echo "Usage: $0 <host>"
     exit(1)
 fi
