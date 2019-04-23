@@ -59,3 +59,8 @@ e set GLOBAL/KEYSTONE/GLANCE/PASS Samana81.
 e set GLOBAL/KEYSTONE/CINDER/USER cinder
 e set GLOBAL/KEYSTONE/CINDER/PASS Samana81.
 
+e set GLOBAL/RBD/VMPOOL vms
+e set GLOBAL/RBD/USER nova
+e set GLOBAL/RBD/SECRET/UUID b5ebf8f1-815c-435e-81b0-76cb8c59cb88
+
+e set GLOBAL/NOVNCPROXY/BASE/URL http://admin.samana.cloud:6080/vnc_auto.html
