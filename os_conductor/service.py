@@ -134,6 +134,8 @@ def process_launcher():
                 pid_list.append(pid)
     if len(pid_list) > 0:
         os.waitpid(0, 0)
+    else:
+        LOG.info("Nothing to wait for.")
 
         if CONF.daemon:
             LOG.info("Sub processes: %s" % pid_list)
