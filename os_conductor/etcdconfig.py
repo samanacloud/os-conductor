@@ -76,9 +76,12 @@ class ETCDConfig:
         else:
             raise AttributeError("Unable to set variable %s" % var_name)
 
-    def collect(self):
+    def collect(self, wait=False):
         """Collects data from etcd"""
-        sections = self.e.read(self.path, recursive=True)
+        if wait:
+            sections = self.watch(self.path, recursive=True)
+        else:
+            sections = self.e.read(self.path, recursive=True)
         self._etcd_to_dict(sections)
 
     def _etcd_to_dict(self, etcdresult):
