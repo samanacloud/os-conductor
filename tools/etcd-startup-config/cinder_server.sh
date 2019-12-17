@@ -8,7 +8,7 @@ e rm --recursive cinder/server
 e set cinder/server/cinder.conf/DEFAULT/rootwrap_config /etc/cinder/rootwrap.conf
 e set cinder/server/cinder.conf/DEFAULT/api_paste_confg /etc/cinder/api-paste.ini
 e set cinder/server/cinder.conf/DEFAULT/iscsi_helper tgtadm
-e set cinder/server/cinder.conf/DEFAULT/volume_name_template volume-%s
+e set cinder/server/cinder.conf/DEFAULT/volume_name_template volume-\\%s
 e set cinder/server/cinder.conf/DEFAULT/volume_group cinder-volumes
 e set cinder/server/cinder.conf/DEFAULT/auth_strategy keystone
 e set cinder/server/cinder.conf/DEFAULT/state_path /var/lib/cinder

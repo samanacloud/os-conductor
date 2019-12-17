@@ -34,7 +34,7 @@ e set nova/compute_xapi/nova.conf/neutron/user_domain_name %GLOBAL_KEYSTONE_USER
 e set nova/compute_xapi/nova.conf/neutron/project_domain_name %GLOBAL_KEYSTONE_PROJECT_DOMAIN%
 e set nova/compute_xapi/nova.conf/neutron/project_name %GLOBAL_KEYSTONE_PROJECT_NAME%
 e set nova/compute_xapi/nova.conf/oslo_concurrency/lock_path /var/lib/nova/tmp
-e set nova/compute_xapi/nova.conf/placement/os_region_name RegionOne
+e set nova/compute_xapi/nova.conf/placement/region_name RegionOne
 e set nova/compute_xapi/nova.conf/placement/auth_type password
 e set nova/compute_xapi/nova.conf/placement/auth_url http://%GLOBAL_KEYSTONE_SERVER%/v3
 e set nova/compute_xapi/nova.conf/placement/project_name %GLOBAL_KEYSTONE_PROJECT_NAME%
@@ -43,12 +43,12 @@ e set nova/compute_xapi/nova.conf/placement/username %GLOBAL_KEYSTONE_PLACEMENT_
 e set nova/compute_xapi/nova.conf/placement/password %GLOBAL_KEYSTONE_PLACEMENT_PASS%
 e set nova/compute_xapi/nova.conf/placement/user_domain_name %GLOBAL_KEYSTONE_USER_DOMAIN%
 e set nova/compute_xapi/nova.conf/scheduler/discover_hosts_in_cells_interval 300
-e set nova/compute_xapi/nova.conf/vnc/server_proxyclient_address %LOCAL_IP%
-e set nova/compute_xapi/nova.conf/vnc/server_listen 0.0.0.0
+e set nova/compute_xapi/nova.conf/vnc/server_proxyclient_address ${HOST}
+e set nova/compute_xapi/nova.conf/vnc/server_listen ${HOST}
 e set nova/compute_xapi/nova.conf/vnc/novncproxy_base_url %GLOBAL_NOVNCPROXY_BASE_URL%
 e set nova/compute_xapi/nova.conf/vnc/enabled true
 e set nova/compute_xapi/nova.conf/xenserver/ovs_integration_bridge br-int
-e set nova/compute_xapi/nova.conf/xenserver/vif_driver nova.virt.xenapi.vif.XenAPIOpenVswitchDriver
+#e set nova/compute_xapi/nova.conf/xenserver/vif_driver nova.virt.xenapi.vif.XenAPIOpenVswitchDriver
 e set nova/compute_xapi/nova.conf/xenserver/connection_password %GLOBAL_XEN_${HOST}_PASS%
 e set nova/compute_xapi/nova.conf/xenserver/connection_username %GLOBAL_XEN_${HOST}_USER%
 e set nova/compute_xapi/nova.conf/xenserver/connection_url http://%GLOBAL_XEN_${HOST}_HOST%
