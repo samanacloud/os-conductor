@@ -44,6 +44,12 @@ base_options = [
             Determines if OS_Conductor will run as daemon or
             if it will only generate the configuration files.
             """),
+    cfg.BoolOpt("pipe",
+        default=True,
+        help="""
+            Determines if OS_Conductor will configuration files
+            as pipes or regular files.
+            """),
 # TODO: add certificates needed to access etcd configurations
 ]
 
