@@ -23,14 +23,14 @@ import etcdconfig
 def get_my_ip(device="eth0"):
     return ni.ifaddresses(device)[ni.AF_INET][0]['addr']
 
-def child(etcd_path, config_file, etcd_server):
-    cfg_file = open(config_file, 'w')
+def child(etcd_path, config_file, etcd_server, wait=False):
     ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server)
     ecfg.set_variable('LOCAL_IP', get_my_ip("eth0"))
-    ecfg.collect()
+    ecfg.collect(wait)
 
     Config = ConfigParser.ConfigParser()
     ecfg.data_to_Config(Config)
+    cfg_file = open(config_file, 'w')
     Config.write(cfg_file)
     cfg_file.close()
 
@@ -62,6 +62,8 @@ if __name__ =="__main__":
             if not stat.S_ISFIFO(os.stat(config_file).st_mode):
                 print "The path is not a pipe"
                 exit(1)
+    child(etcd_path, config_file, etcd_server, wait=False)
+    wait = not pipe
     while True:
         child_pid = os.fork()
         if child_pid != 0:
@@ -69,5 +71,5 @@ if __name__ =="__main__":
             if not pipe or status != 0:
                 break
         else:
-            child(etcd_path, config_file, etcd_server)
+            child(etcd_path, config_file, etcd_server, wait=wait)
             break
