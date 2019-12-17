@@ -79,7 +79,7 @@ class ETCDConfig:
     def collect(self, wait=False):
         """Collects data from etcd"""
         if wait:
-            sections = self.watch(self.path, recursive=True)
+            sections = self.e.watch(self.path, recursive=True)
         else:
             sections = self.e.read(self.path, recursive=True)
         self._etcd_to_dict(sections)
