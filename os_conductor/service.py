@@ -53,13 +53,13 @@ def set_file_permissions(section, config_path):
     except:
         LOG.error("Unable to change permissions of file %s" % config_path)
 
-def child(etcd_path, config_file):
+def child(etcd_path, config_file, wait=False):
     global ecfg
 
     Config = ConfigParser.ConfigParser()
+    ecfg.collect(wait)
+    ecfg.data_to_Config(Config)
     with write_file(config_file, Config) as cfg_file:
-        ecfg.collect()
-        ecfg.data_to_Config(Config)
         Config.write(cfg_file)
 
     if not CONF.daemon:
@@ -79,6 +79,7 @@ def create_file(os_component, config_file):
     LOG.info("Searching etcd path %(etcd_path)s", 
         { 'etcd_path': etcd_path} )
     daemon = CONF.daemon
+    pipe = CONF.pipe
 
     if os.path.exists(config_path):
         if stat.S_ISFIFO(os.stat(config_path).st_mode):
@@ -88,9 +89,10 @@ def create_file(os_component, config_file):
 
     if daemon:
         try:
-            os.mkfifo(config_path)
-            set_file_permissions(os_component, config_path)
-            LOG.info("Created %s pipe." % config_path)
+            if pipe:
+                os.mkfifo(config_path)
+                set_file_permissions(os_component, config_path)
+                LOG.info("Created %s pipe." % config_path)
         except OSError:
             LOG.error("Unable to create pipe %s. Check path." % config_path)
             exit(1)
@@ -98,7 +100,7 @@ def create_file(os_component, config_file):
     try:
         ecfg = etcdconfig.ETCDConfig(etcd_path, etcd_server=CONF.etcd_server, domain=CONF.domain)
         ecfg.set_variable('LOCAL_IP', CONF.my_ip)
-        ecfg.collect()
+        child(etcd_path, config_path, wait=False)
     except Exception as e:
         LOG.error("Unable to generate configuration %s. %s" % (config_file, str(e)))
         exit(1)
@@ -111,7 +113,7 @@ def create_file(os_component, config_file):
                 break
         else:
             LOG.info("Waiting for requests to %s pipe/file" % config_path)
-            child(etcd_path, config_path)
+            child(etcd_path, config_path, wait=True)
             break
 
 
