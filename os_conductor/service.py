@@ -104,6 +104,8 @@ def create_file(os_component, config_file):
     except Exception as e:
         LOG.error("Unable to generate configuration %s. %s" % (config_file, str(e)))
         exit(1)
+    if pipe: wait=False
+    else: wait=True
 
     while True:
         child_pid = os.fork()
@@ -113,7 +115,7 @@ def create_file(os_component, config_file):
                 break
         else:
             LOG.info("Waiting for requests to %s pipe/file" % config_path)
-            child(etcd_path, config_path, wait=True)
+            child(etcd_path, config_path, wait=wait)
             break
 
 
