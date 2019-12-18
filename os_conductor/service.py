@@ -115,7 +115,10 @@ def create_file(os_component, config_file):
                 break
         else:
             LOG.info("Waiting for requests to %s pipe/file" % config_path)
-            child(etcd_path, config_path, wait=wait)
+            try:
+                child(etcd_path, config_path, wait=wait)
+            except Exception as e:
+                LOG.error("Error while waiting for response from etcd %s" % str(e))
             break
 
 
