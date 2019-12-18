@@ -19,6 +19,9 @@ from etcd server
 import etcd.client as eClient
 import ConfigParser
 import dns.resolver
+from oslo_log import log as logging
+
+LOG = logging.getLogger(__name__)
 
 class ETCDConfig:
     """Class that handles communication with ETCD service
@@ -79,6 +82,7 @@ class ETCDConfig:
     def collect(self, wait=False):
         """Collects data from etcd"""
         if wait:
+            LOG.info("Waiting for changes to %s" % self.path)
             self.e.watch(self.path, recursive=True)
         sections = self.e.read(self.path, recursive=True)
         self._etcd_to_dict(sections)
