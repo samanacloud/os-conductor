@@ -118,7 +118,7 @@ def create_file(os_component, config_file):
             try:
                 child(etcd_path, config_path, wait=wait)
             except Exception as e:
-                LOG.error("Error while waiting for response from etcd %s" % str(e))
+                LOG.debug("Error while waiting for response from etcd %s" % str(e))
             break
 
 
