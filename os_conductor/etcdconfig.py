@@ -84,6 +84,7 @@ class ETCDConfig:
         if wait:
             LOG.info("Waiting for changes to %s" % self.path)
             self.e.watch(self.path, recursive=True)
+            LOG.info("Change recieved to %s" % self.path)
         sections = self.e.read(self.path, recursive=True)
         self._etcd_to_dict(sections)
 
